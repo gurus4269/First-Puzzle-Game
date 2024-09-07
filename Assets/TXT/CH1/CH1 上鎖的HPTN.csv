@@ -1,0 +1,12 @@
+flag,ID,character,context,position,jump,backGround,effect
+#,0,Angel,這個是...,middleright,1,,
+#,1,Calina,這是什麼高科技阿，沒看過ㄟ,middleleft,2,,
+#,2,Angel,"這個是全息投影暫存記事本(Holographic Projection Temporary Notepad, 簡稱HPTN)",middleright,3,,
+#,3,Calina,你竟然知道,middleleft,4,,
+#,4,Angel,當然，這個就是我發明的，還沒有正式發售，目前大概只有我和姐姐會用,middleright,5,,
+#,5,Angel,本身體積超小，操作簡單又安全，雖然能存入的東西有限，不過可以無限複寫...,middleright,6,,
+#,6,Calina,好了好了...我們先來看看裡面寫了什麼吧,middleleft,7,,
+#,7,Angel,不過日記本上鎖了，不知道有沒有方法可以打開,middleright,8,,
+#,8,Calina,要不試試安娜的生日?應該都會用生日當密碼吧,middleleft,9,,
+#,9,Angel,怎麼可能，我提醒過姐姐超過100遍了，而且這種重要的東西，姊姊不可能沒有危機意識的啦,middleright,10,,
+NEXT,10,,,,,,
