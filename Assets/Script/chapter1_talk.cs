@@ -10,9 +10,12 @@ using UnityEngine.SceneManagement;
 public class chapter1_talk : MonoBehaviour
 {
     public GameObject talkUI;
+    public GameObject characterUI;
     public TextAsset chapterdialog;//對話的資料
+    // public List<TextAsset> chapterdialog = new List<TextAsset>();//本章節所有對話
+    // Dictionary<string, TextAsset> chapterdialogtext = new Dictionary<string, TextAsset>();//劇本名稱-->劇本
     public SpriteRenderer right,left,middle,middleRight,middleLeft;//人物圖片
-    public Image backGround;//背景圖片
+    public SpriteRenderer backGround;//背景圖片
     public GameObject memoryMask;//回憶濾鏡
     public TMP_Text nameText;//顯示的名稱
     public TMP_Text whereText;//顯示的地點
@@ -23,13 +26,15 @@ public class chapter1_talk : MonoBehaviour
     public List<Sprite> sprites = new List<Sprite>();//人物編號
     Dictionary<string, Sprite> characterImg = new Dictionary<string, Sprite>();//角色人物-->圖片
     public List<Sprite> backGroundSprites = new List<Sprite>();//人物編號
-    Dictionary<string, Sprite> backGroundImg = new Dictionary<string, Sprite>();//角色人物-->圖片
+    Dictionary<string, Sprite> backGroundImg = new Dictionary<string, Sprite>();//背景明成-->背景圖片
     private int dialogcount = 0;//保存當前的對話Index;
     private string[]  dialogRows;
+    private Control control;
     
 
     private void Awake() 
     {
+        //人物圖片
         characterImg["Angel"] = sprites[0];
         characterImg["Anna"] = sprites[1];
         characterImg["Calina"] = sprites[2];
@@ -45,6 +50,7 @@ public class chapter1_talk : MonoBehaviour
         characterImg["Selina"] = sprites[12];
         characterImg["news"] = sprites[13];
 
+        //背景圖片
         backGroundImg["AngelRoom"] = backGroundSprites[0];
         backGroundImg["AnnaRoom"] = backGroundSprites[1];
         backGroundImg["canteen"] = backGroundSprites[2];
@@ -69,19 +75,26 @@ public class chapter1_talk : MonoBehaviour
         backGroundImg["square"] = backGroundSprites[21];
         backGroundImg["tavernBasement"] = backGroundSprites[22];
         backGroundImg["tavern"] = backGroundSprites[23];
+
+        //對話劇本
+        // chapterdialogtext["Opening"] = chapterdialog[0];
+        // chapterdialogtext["Ending"] = chapterdialog[1];
+        // chapterdialogtext["HPTN"] = chapterdialog[2];
+
     }
 
     void Start()
     {
         talkUI.SetActive(true);
+        characterUI.SetActive(true);
         readText(chapterdialog);
         readline();
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void StartDelay(float sec)
@@ -192,6 +205,7 @@ public class chapter1_talk : MonoBehaviour
     }
     public void readline()
     {
+        control = FindObjectOfType<Control>();
         foreach(var row in dialogRows)
         {
             string[] cells = row.Split(',');
@@ -227,8 +241,11 @@ public class chapter1_talk : MonoBehaviour
             {
                 UpdateBackGround(cells[6],int.Parse(cells[7]));
                 talkUI.SetActive(false);
+                characterUI.SetActive(false);
                 GenrateOption(int.Parse(cells[1]));
                 buttonGroup.gameObject.SetActive(true);
+                
+                return;
             }
             else if(cells[0] == "*" && int.Parse(cells[1]) == dialogcount)//無人句(名稱+對話)
             {
@@ -246,11 +263,34 @@ public class chapter1_talk : MonoBehaviour
             }
             else if(cells[0] == "NEXT")//小節結束句
             {
+                control.OpenClose();
+                // talkUI.SetActive(false);
+                // characterUI.SetActive(false);
+                // right.sprite = null;
+                // middleRight.sprite = null;
+                // middle.sprite = null;
+                // middleLeft.sprite = null;
+                // left.sprite = null;
+                // dialogcount = 0;
+                // backGround.gameObject.SetActive(false);
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else if(cells[0] == "END")//章節結束句
             {
+                control.EndClosed();
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+            else if(cells[0] == "REPEAT")
+            {
+                control.ObjectClosed(int.Parse(cells[2]));
+                right.sprite = null;
+                middleRight.sprite = null;
+                middle.sprite = null;
+                middleLeft.sprite = null;
+                left.sprite = null;
+                dialogcount = 0;
+                readline();
+
             }
         }
     }
@@ -285,6 +325,11 @@ public class chapter1_talk : MonoBehaviour
         }
         buttonGroup.gameObject.SetActive(false);
         talkUI.SetActive(true);
+        characterUI.SetActive(true);
         readline();
+    }
+    public void EndChapter()
+    {
+        //if()
     }
 }
