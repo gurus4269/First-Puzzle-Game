@@ -9,4 +9,5 @@ flag,ID,character,context,position,jump,backGround,effect
 #,7,Angel,不過日記本上鎖了，不知道有沒有方法可以打開,middleright,8,AnnaRoom,0
 #,8,Calina,要不試試安娜的生日?應該都會用生日當密碼吧,middleleft,9,AnnaRoom,0
 #,9,Angel,怎麼可能，我提醒過姐姐超過100遍了，而且這種重要的東西，姊姊不可能沒有危機意識的啦,middleright,10,AnnaRoom,0
-REPEAT,10,3,,,,,
+/,10,system,輸入密碼以解鎖,,11,AnnaRoom,0
+REPEAT,11,3,5,,,,

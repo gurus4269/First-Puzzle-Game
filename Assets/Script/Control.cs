@@ -9,6 +9,7 @@ public class Control : MonoBehaviour
     public List<Canvas> canvas = new List<Canvas>();//動畫編號
     Dictionary<string, Canvas> canvasName = new Dictionary<string, Canvas>();//劇情-->動畫
     private int[] collect;
+    private EndOrNot EndOr;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,8 @@ public class Control : MonoBehaviour
         canvasName["ending"] = canvas[1];
         canvasName["normal"] = canvas[2];
         canvasName["HPTN"] = canvas[3];
+        canvasName["Calander"] = canvas[4];
+        canvasName["password"] = canvas[5];
     }
 
     //控制開場
@@ -64,7 +67,8 @@ public class Control : MonoBehaviour
 
     private void EndStart()
     {
-        if(CheckEndOrNot() == true)
+        EndOr = FindObjectOfType<EndOrNot>();
+        if(CheckEndOrNot() == true && EndOr.CheckEnd() == true)
         {
             canvas[2].gameObject.SetActive(false);
             canvas[1].gameObject.SetActive(true);

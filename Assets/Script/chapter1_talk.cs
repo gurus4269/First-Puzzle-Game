@@ -211,6 +211,7 @@ public class chapter1_talk : MonoBehaviour
             string[] cells = row.Split(',');
             if(cells[0] == "#" && int.Parse(cells[1]) == dialogcount)//一般句(人物+對話+圖片)
             {
+                characterUI.gameObject.SetActive(true);
                 UpdateBackGround(cells[6],int.Parse(cells[7]));
                 UpdateText(cells[2], cells[3]);
                 int posIndex;
@@ -251,19 +252,30 @@ public class chapter1_talk : MonoBehaviour
             {
                 UpdateBackGround(cells[6],int.Parse(cells[7]));
                 UpdateText(cells[2], cells[3]);
-
+                characterUI.gameObject.SetActive(false);
                 dialogcount = int.Parse(cells[5]);
                 break;
             }
             else if(cells[0] == "$" && int.Parse(cells[1]) == dialogcount)//等待句
             {
+                characterUI.gameObject.SetActive(true);
                 UpdateBackGround(cells[6],int.Parse(cells[7]));
                 //StartDelay(int.Parse(cells[2]));
                 dialogcount = int.Parse(cells[5]);
+                break;
+            }
+            else if(cells[0] == "/" && int.Parse(cells[1]) == dialogcount)//物品顯示句
+            {
+                characterUI.gameObject.SetActive(false);
+                UpdateBackGround(cells[6],int.Parse(cells[7]));
+                UpdateText(cells[2], cells[3]);
+                dialogcount = int.Parse(cells[5]);
+                break;
             }
             else if(cells[0] == "NEXT")//小節結束句
             {
                 control.OpenClose();
+                break;
                 // talkUI.SetActive(false);
                 // characterUI.SetActive(false);
                 // right.sprite = null;
@@ -278,6 +290,8 @@ public class chapter1_talk : MonoBehaviour
             else if(cells[0] == "END")//章節結束句
             {
                 control.EndClosed();
+                SceneManager.LoadScene(1);
+                break;
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else if(cells[0] == "REPEAT")
@@ -290,6 +304,8 @@ public class chapter1_talk : MonoBehaviour
                 left.sprite = null;
                 dialogcount = 0;
                 readline();
+                control.ObjectStart(int.Parse(cells[3]));
+                break;
 
             }
         }
@@ -331,5 +347,9 @@ public class chapter1_talk : MonoBehaviour
     public void EndChapter()
     {
         //if()
+    }
+    public void OpenObject()
+    {
+
     }
 }
